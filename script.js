@@ -1,6 +1,11 @@
 // Global declarations
 let boxes = document.querySelectorAll('#box')
 let box = document.querySelector('#box')
+let restartButton = document.querySelector('.restart-button')
+restartButton.addEventListener('click', function(){
+    window.location.reload()
+})
+
 
 
 // Player Factory function
@@ -16,7 +21,19 @@ const displayControllerModule = () => {
     const displayResult = function(string){
         document.querySelector('.result').textContent = `${string}`
     }
-    return {displayResult}
+
+    const displayTurn = function(string){
+        document.querySelector('.display-turn').textContent = `${string}`
+    }
+
+    const displayGameContainer = function(){
+        document.querySelector('.game-container').classList.add('show')
+    }
+
+    const hideGameContainer = function(){
+        document.querySelector('.game-container').classList.remove('show')
+    }
+    return {displayResult, displayTurn, displayGameContainer, hideGameContainer}
 }
 
 // Game board module
@@ -25,7 +42,8 @@ const gameBoardModule = (boardActive) => {
 
     const renderboard = function(){
         for (let i = 0; i < 9; i++){
-            boxes[i].textContent = gameboard[i]
+            if (gameboard[i] == 'X') boxes[i].classList.add('cross')
+            else if (gameboard[i] == 'O') boxes[i].classList.add('circle')
         }
     }
 
@@ -53,13 +71,24 @@ const game = () => {
     let playerOne = playerFactory('Player1', 1, 'X', true)
     let playerTwo = playerFactory('Player2', 2, 'O', false)
 
+    displayController.displayGameContainer()
+    displayController.displayTurn(`${playerOne.name}'s turn`)
     boxes.forEach(box => box.addEventListener('click', function(e){
-        if (!playerOne.isActive) addMark(e.target.dataset.id, playerTwo.marker);
-        else addMark(e.target.dataset.id, playerOne.marker)
+        console.log(playerOne.isActive, playerTwo.isActive, newboard.boardActive);
+
+        if (!playerOne.isActive && newboard.boardActive) {
+            displayController.displayTurn(`${playerOne.name}'s turn`)
+            addMark(e.target.dataset.id, playerTwo.marker);
+        }
+        else if(newboard.boardActive) {
+            displayController.displayTurn(`${playerTwo.name}'s turn`)
+            addMark(e.target.dataset.id, playerOne.marker)
+        }
     }))
 
     function addMark(boxID, marker){
         if (newboard.gameboard[boxID] === '' && (newboard.boardActive)){
+            console.log(newboard.gameboard[boxID]);
             newboard.gameboard[boxID] = marker
             playerOne.changeActiveStatus()
             playerTwo.changeActiveStatus()
@@ -81,11 +110,16 @@ const game = () => {
                 newboard.changeBoardActiveStatus()
                 if (playerOne.isActive) displayController.displayResult(`${playerTwo.name} WON!`)
                 else displayController.displayResult(`${playerOne.name} WON!`)
+                displayController.displayTurn('')
+                displayController.hideGameContainer()
+                
             }
 
             if (!newboard.gameboard.includes('')){
                 newboard.changeBoardActiveStatus()
                 displayController.displayResult('ITS A TIE')
+                displayController.displayTurn('')
+                displayController.hideGameContainer()
             }
 
         }
