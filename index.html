@@ -13,30 +13,29 @@
 <body>
     <h1 class="page-title">TIC TAC TOE</h1>
 
-    <div class="form-container">
-        <form action="" id="form">
-            <div class="p1form">
-                <input type="text" placeholder="Player one name..." name="p1name">
-                <label for="p1marker">Player one marker:</label>
-                <select name="p1marker" id="p1marker">
-                    <option value="X">X</option>
-                    <option value="O">O</option>
-                </select>
-            </div>
-            <div class="p2form">
-                <input type="text" placeholder="Player two name..." name="p2name">
-                <label for="p2marker">Player two marker:</label>
-                <select name="p2marker" id="p2marker">
-                    <option value="X">X</option>
-                    <option value="O">O</option>
-                </select>
-            </div>
-            <div class="submit-button">
-                <button id="submit" class="btn btn-primary">Submit</button>
-            </div>         
-        </form>
-
-    </div>
+        <div class="form-container" id="form">
+            <form action="" id="actualform">
+                <div class="p1form">
+                    <input type="text" placeholder="Player one name..." id="p1name">
+                    <label for="p1marker">Player one marker:</label>
+                    <select name="p1marker" id="p1marker">
+                        <option value="X">X</option>
+                        <option value="O">O</option>
+                    </select>
+                </div>
+                <div class="p2form">
+                    <input type="text" placeholder="Player two name..." id="p2name">
+                    <label for="p2marker">Player two marker:</label>
+                    <select name="p2marker" id="p2marker">
+                        <option value="X">X</option>
+                        <option value="O">O</option>
+                    </select>
+                </div>
+                <div class="submit-button">
+                    <button id="submit" class="btn btn-primary">Submit</button>
+                </div>         
+            </form>
+        </div>
 
     <p class="display-turn"></p>
     <div class="game-container">
@@ -52,7 +51,7 @@
     </div>
     <div class="result-container">
         <h2 class="result"></h2>
-        <button class="restart-button btn btn-primary">Restart</button>
+        <button class="restart-button">Restart</button>
     </div>
 </body>
 </html>

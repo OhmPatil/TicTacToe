@@ -1,12 +1,11 @@
 // Global declarations
 let boxes = document.querySelectorAll('#box')
 let box = document.querySelector('#box')
+let form = document.getElementById('actualform')
 let restartButton = document.querySelector('.restart-button')
 restartButton.addEventListener('click', function(){
     window.location.reload()
 })
-
-
 
 // Player Factory function
 const playerFactory = (name, id, marker, isActive) => {
@@ -33,7 +32,43 @@ const displayControllerModule = () => {
     const hideGameContainer = function(){
         document.querySelector('.game-container').classList.remove('show')
     }
-    return {displayResult, displayTurn, displayGameContainer, hideGameContainer}
+
+    const displayRestartButon = function(){
+        restartButton.classList.add('show')
+    }
+
+    const hideRestartButton = function(){
+        restartButton.classList.remove('show')
+        restartButton.classList.add('hide')
+    }
+    return {displayResult, displayTurn, displayGameContainer, hideGameContainer, displayRestartButon, hideRestartButton}
+}
+
+// Form controller module
+const formControllerModule = () => {
+    const showform = function(){
+        restartButton.classList.remove('show')
+        restartButton.classList.add('hide')
+        document.getElementById('form').classList.remove('hide')
+    }
+
+    const hideform = function(){
+        restartButton.classList.remove('hide')
+        document.getElementById('form').classList.remove('show')
+        document.getElementById('form').classList.add('hide')
+    }
+
+    // const validateform = function(){
+    //     // let p1name = document.getElementById('p1name').value
+    //     let p1marker = document.getElementById('p1marker').value
+    //     // let p2name = document.getElementById('p2name').value
+    //     let p2marker = document.getElementById('p2marker').value
+
+    //     if (p1marker === p2marker) document.getElementById('submit').disabled = true
+    //     else document.getElementById('submit').disabled = false
+    // }
+
+    return {showform, hideform}
 }
 
 // Game board module
@@ -65,14 +100,14 @@ const gameBoardModule = (boardActive) => {
 }
 
 // Actual game module - All Logic goes here
-const game = () => {
+const game = (playerOne, playerTwo) => {
     let newboard = gameBoardModule(true)
     let displayController = displayControllerModule()
-    let playerOne = playerFactory('Player1', 1, 'X', true)
-    let playerTwo = playerFactory('Player2', 2, 'O', false)
 
+    displayController.displayRestartButon()
     displayController.displayGameContainer()
     displayController.displayTurn(`${playerOne.name}'s turn`)
+
     boxes.forEach(box => box.addEventListener('click', function(e){
         console.log(playerOne.isActive, playerTwo.isActive, newboard.boardActive);
 
@@ -126,6 +161,20 @@ const game = () => {
     }
 }
 
+formcontroller = formControllerModule()
+formcontroller.showform()
 
-// newgame = game()
+form.onsubmit = function(e){
+    e.preventDefault()
+    let p1name = document.getElementById('p1name').value
+    let p1marker = document.getElementById('p1marker').value
+    let p2name = document.getElementById('p2name').value
+    let p2marker = document.getElementById('p2marker').value;
 
+    playerOne = playerFactory(p1name, 1, p1marker, true)
+    playerTwo = playerFactory(p2name, 2, p2marker, false)
+
+    formcontroller.hideform()
+    form.reset()
+    newgame = game(playerOne, playerTwo)
+}
