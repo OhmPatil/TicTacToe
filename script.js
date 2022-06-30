@@ -126,5 +126,6 @@ const game = () => {
     }
 }
 
-newgame = game()
+
+// newgame = game()
 
