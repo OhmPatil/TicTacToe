@@ -146,7 +146,7 @@ const game = (playerOne, playerTwo) => {
                 if (playerOne.isActive) displayController.displayResult(`${playerTwo.name} WON!`)
                 else displayController.displayResult(`${playerOne.name} WON!`)
                 displayController.displayTurn('')
-                displayController.hideGameContainer()
+                // displayController.hideGameContainer()
                 
             }
 
@@ -154,7 +154,7 @@ const game = (playerOne, playerTwo) => {
                 newboard.changeBoardActiveStatus()
                 displayController.displayResult('ITS A TIE')
                 displayController.displayTurn('')
-                displayController.hideGameContainer()
+                // displayController.hideGameContainer()
             }
 
         }
