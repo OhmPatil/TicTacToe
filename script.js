@@ -1,6 +1,5 @@
 // Global declarations
 let boxes = document.querySelectorAll('#box')
-let box = document.querySelector('#box')
 let form = document.getElementById('actualform')
 let restartButton = document.querySelector('.restart-button')
 restartButton.addEventListener('click', function(){
@@ -57,7 +56,6 @@ const formControllerModule = () => {
         document.getElementById('form').classList.remove('show')
         document.getElementById('form').classList.add('hide')
     }
-
     // const validateform = function(){
     //     // let p1name = document.getElementById('p1name').value
     //     let p1marker = document.getElementById('p1marker').value
@@ -146,6 +144,9 @@ const game = (playerOne, playerTwo) => {
                 if (playerOne.isActive) displayController.displayResult(`${playerTwo.name} WON!`)
                 else displayController.displayResult(`${playerOne.name} WON!`)
                 displayController.displayTurn('')
+                boxes[condition[0]].classList.add('win')
+                boxes[condition[1]].classList.add('win')
+                boxes[condition[2]].classList.add('win')
                 // displayController.hideGameContainer()
                 
             }
@@ -161,6 +162,8 @@ const game = (playerOne, playerTwo) => {
     }
 }
 
+
+// Main global driver code
 formcontroller = formControllerModule()
 formcontroller.showform()
 

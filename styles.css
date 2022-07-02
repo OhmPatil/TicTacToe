@@ -124,3 +124,7 @@ input{
 .hide{
     display: none;
 }
+
+.win{
+    background-color: limegreen;
+}
